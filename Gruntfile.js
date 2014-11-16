@@ -14,7 +14,7 @@ module.exports = function(grunt) {
         },
         copy:{
             html: {
-                src: ['**/*.html','!**/node_modules/**'],
+                src: ['index.html'],
                 dest: 'dist/'
             }
         },
@@ -42,11 +42,32 @@ module.exports = function(grunt) {
                 singleQuotes: true
             },
             dist: {
-                    src: ['.tmp/concat/modules/*.js']
+                    src: ['.tmp/concat/*.js']
             }
         },
         jshint: {
             all: ['Gruntfile.js', 'modules/**/*.js', 'common/**/*.js']
+        },
+        ngtemplates:  {
+            app:        {
+                src:      'modules/**/*.html',
+                dest:     '.tmp/concat/templates.js',
+                options:  {
+                    module: 'popmote',
+                    usemin: 'app.js',
+                    htmlmin: {
+                        collapseBooleanAttributes:      true,
+                        collapseWhitespace:             true,
+                        removeAttributeQuotes:          true,
+                        removeComments:                 true, // Only if you don't use comment directives!
+                        removeEmptyAttributes:          true,
+                        removeRedundantAttributes:      true,
+                        removeScriptTypeAttributes:     true,
+                        removeStyleLinkTypeAttributes:  true
+                    }
+                }
+
+            }
         }
     });
 
@@ -55,6 +76,7 @@ module.exports = function(grunt) {
         'clean:dist',
         'copy:html',
         'useminPrepare',
+        'ngtemplates',
         'concat',
         'ngAnnotate',
         'uglify',
