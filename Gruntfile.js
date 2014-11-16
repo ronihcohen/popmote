@@ -42,14 +42,16 @@ module.exports = function(grunt) {
                 singleQuotes: true
             },
             dist: {
-                files: [{
                     src: ['.tmp/concat/modules/*.js']
-                }]
             }
+        },
+        jshint: {
+            all: ['Gruntfile.js', 'modules/**/*.js', 'common/**/*.js']
         }
     });
 
     grunt.registerTask('default',[
+        'jshint',
         'clean:dist',
         'copy:html',
         'useminPrepare',
@@ -60,4 +62,4 @@ module.exports = function(grunt) {
         'usemin',
         'clean:tmp'
     ]);
-}
+};
